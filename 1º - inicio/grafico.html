@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <script>
+        const config = {
+        type: 'line', 
+        data: {
+        datasets: [{
+            data: [{
+                x: '2021-11-06 23:39:30',
+                y: 50
+            }, {
+                x: '2021-11-07 01:00:28',
+                y: 60
+            }, {
+                x: '2021-11-07 09:00:28',
+                y: 20
+            }]
+         }],
+        
+            scales: {
+                x: {
+                    type: 'time',
+                    display: true,
+                    offset: true,
+                    time: {
+                    unit: 'day'
+                    }
+                },
+            },
+            },
+        };
+      </script>
+            <script>
+                const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                );
+            </script>
+    <script>
+        const DATA_COUNT = 7;
+        const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
+        const labels = [];
+
+        for (let i = 0; i < DATA_COUNT; ++i) {
+        labels.push(Utils.newDate(i));
+        }
+
+        const data = {
+        labels: labels,
+        datasets: [{
+            type: 'bar',
+            label: 'Dataset 1',
+            backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+            borderColor: Utils.CHART_COLORS.red,
+            data: Utils.numbers(NUMBER_CFG),
+        }, {
+            type: 'bar',
+            label: 'Dataset 2',
+            backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+            borderColor: Utils.CHART_COLORS.blue,
+            data: Utils.numbers(NUMBER_CFG),
+        }, {
+            type: 'line',
+            label: 'Dataset 3',
+            backgroundColor: Utils.transparentize(Utils.CHART_COLORS.green, 0.5),
+            borderColor: Utils.CHART_COLORS.green,
+            fill: false,
+            data: Utils.numbers(NUMBER_CFG),
+        }]
+        };
+    </script>
+    <script>
+        const actions = [
+        {
+            name: 'Randomize',
+            handler(chart) {
+            chart.data.datasets.forEach(dataset => {
+                dataset.data = Utils.numbers({count: chart.data.labels.length, min: 0, max: 100});
+            });
+            chart.update();
+            }
+        },
+        ];
+    </script>
+</body>
+</html>
+
+
+
